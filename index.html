@@ -11,27 +11,30 @@
   <body>
     <h2>Fight!</h2>
     <div class="progress">
-		<p>P1 Health</p>
-			<progress id="Hero-health" max="100" value="91"></progress>
-			<span></span>
+        <p>P1 Health</p>
+        <progress id="Hero-health" max="100" value="91"></progress>
+        <span id="Hero-health-span"></span>
 		</div>
         <div class="progress">
             <p>P2 Health</p>
-                <progress id="Enemy-health" max="100" value="91"></progress>
-                <span></span>
+            <progress id="Enemy-health" max="100" value="91"></progress>
+            <span id="Enemy-health-span"></span>
             </div>
-            <input type="button" id="boton" value="Reload" />
-    <div id="Hero-health"></div>
-    <div id="Enemy-health"></div>
-
-    
-    
+    <input type="button" id="boton" value="Reload" />    
     <script src="../js/ejemplo.js"></script>
 
   </body>
 
 </html>
 <script>
-    document.getElementById("Hero-health").innerText = hero.showHealth();
-    document.getElementById("Enemy-health").innerText = enemy.showHealth();
+   const heroHealthBar = document.getElementById("Hero-health");
+    heroHealthBar.value = hero.health; 
+
+    
+    const enemyHealthBar = document.getElementById("Enemy-health");
+    enemyHealthBar.value = enemy.health; 
+
+    
+    document.getElementById("Hero-health-span").innerText = hero.showHealth();
+    document.getElementById("Enemy-health-span").innerText = enemy.showHealth();
 </script>

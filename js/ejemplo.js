@@ -66,6 +66,7 @@ class Character {
   //Creación de personajes
   const hero = new Character("Heroe", generateHealth(), 110);
   const enemy = new Character("Limo", generateHealth(), 40);
+  
   console.log(hero.showHealth());
   console.log(enemy.showHealth());
 
