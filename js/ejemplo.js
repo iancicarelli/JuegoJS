@@ -24,6 +24,10 @@ class Character {
     status() {
       return `${this.name} - HP ${this.health}/${this.maxhealth}`;
     }
+
+    showHealth(){
+        return `${this.health}`;
+    }
   }
   
   //Función para combatir
@@ -54,10 +58,17 @@ class Character {
       }
     }
   }
+
+  function generateHealth(){
+    return Math.floor(Math.random()*100)+1
+  }
   
   //Creación de personajes
-  const hero = new Character("Heroe", 100, 110);
-  const enemy = new Character("Limo", 500, 40);
-  
+  const hero = new Character("Heroe", generateHealth(), 110);
+  const enemy = new Character("Limo", generateHealth(), 40);
+  console.log(hero.showHealth());
+  console.log(enemy.showHealth());
+
+
   //Comenzar combate
   fight(hero, enemy);
