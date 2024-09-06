@@ -62,14 +62,28 @@ class Character {
   function generateHealth(){
     return Math.floor(Math.random()*100)+1
   }
+
+  function updateHealth(){
+    const heroHealthBar = document.getElementById("Hero-health");
+    heroHealthBar.value = hero.health; 
+
+
+    const enemyHealthBar = document.getElementById("Enemy-health");
+    enemyHealthBar.value = enemy.health; 
+    
+    
+    document.getElementById("Hero-health-span").innerText = hero.showHealth();
+    document.getElementById("Enemy-health-span").innerText = enemy.showHealth();
+  }
   
   //Creación de personajes
   const hero = new Character("Heroe", generateHealth(), 110);
   const enemy = new Character("Limo", generateHealth(), 40);
-  
+
   console.log(hero.showHealth());
   console.log(enemy.showHealth());
 
 
   //Comenzar combate
-  fight(hero, enemy);
+  updateHealth()
+  fight(hero,enemy)

@@ -13,12 +13,14 @@
     <div class="progress">
         <p>P1 Health</p>
         <progress id="Hero-health" max="100" value="91"></progress>
-        <span id="Hero-health-span"></span>
-		</div>
+        <span id="Hero-health-span" style="color: aliceblue;"></span>
+        <div class="p1"><img src="res/goat.png" alt=""></div>   
+		</div> 
         <div class="progress">
             <p>P2 Health</p>
             <progress id="Enemy-health" max="100" value="91"></progress>
-            <span id="Enemy-health-span"></span>
+            <span id="Enemy-health-span" style="color: aliceblue;"></span>
+            <div class="p2"><img src="res/meat!.png" alt=""></div>  
             </div>
     <input type="button" id="boton" value="Reload" />    
     <script src="../js/ejemplo.js"></script>
@@ -27,14 +29,5 @@
 
 </html>
 <script>
-   const heroHealthBar = document.getElementById("Hero-health");
-    heroHealthBar.value = hero.health; 
-
-    
-    const enemyHealthBar = document.getElementById("Enemy-health");
-    enemyHealthBar.value = enemy.health; 
-
-    
-    document.getElementById("Hero-health-span").innerText = hero.showHealth();
-    document.getElementById("Enemy-health-span").innerText = enemy.showHealth();
+  
 </script>
