@@ -11,3 +11,17 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
+#hitbox {
+    position: relative;
+    width: 100vh;
+    height: 100vh;
+}
+
+#p1 {
+    position: absolute;
+}
+
+#p2{
+    position: absolute;
+}

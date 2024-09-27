@@ -82,8 +82,7 @@ class Character {
 
   console.log(hero.showHealth());
   console.log(enemy.showHealth());
-
-
-  //Comenzar combate
+  
   updateHealth()
-  fight(hero,enemy)
+  
+ 

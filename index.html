@@ -11,19 +11,26 @@
   <body>
     <h2>Fight!</h2>
     <div class="progress">
-        <p>P1 Health</p>
+        <div id="hitbox">
+          <div id="p1"><img src="res/goat.png" alt="">
+            <p>P1 Health</p>
         <progress id="Hero-health" max="100" value="91"></progress>
         <span id="Hero-health-span" style="color: aliceblue;"></span>
-        <div class="p1"><img src="res/goat.png" alt=""></div>   
+          </div>
+        </div>
+          
 		</div> 
         <div class="progress">
-            <p>P2 Health</p>
+          <div id="hitbox">
+            <div id="p2"><img src="res/meat!.png" alt="">
+              <p>P2 Health</p>
             <progress id="Enemy-health" max="100" value="91"></progress>
             <span id="Enemy-health-span" style="color: aliceblue;"></span>
-            <div class="p2"><img src="res/meat!.png" alt=""></div>  
+            </div>  
+          </div>
             </div>
-    <input type="button" id="boton" value="Reload" />    
-    <script src="../js/ejemplo.js"></script>
+    <script src="./js/ejemplo.js"></script>
+    <script src="./js/carga.js"></script>
 
   </body>
 
