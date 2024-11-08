@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="choosecharacter-container">
       <h1>Selecciona tu personaje</h1>
   
       <div class="slideshow-container" ref="slideshowP1">
