@@ -33,8 +33,11 @@
         selectedPlayer1Image: null,
         selectedPlayer2Image: null,
         keys: {},
-        player1: { x: 210, y: 240, health: 100, angle: 0, speed: 0, moveAngle: 0 },
-        player2: { x: 530, y: 240, health: 100, angle: 0, speed: 0, moveAngle: 0 },
+        player1: { width: 32, height: 32, x: 210, y: 240, health: 100, angle: 0, speed: 0, moveAngle: 0, type: 0 },
+        player2: { width: 32, height: 32, x: 530, y: 240, health: 100, angle: 0, speed: 0, moveAngle: 0, type: 0 },
+        bullet1: { width: 4, height: 4, x: 0, y: 0, health: 1, angle: 0, speed: 5, moveAngle: 0, type: 1 },
+        bullet2: { width: 4, height: 4, x: 0, y: 0, health: 1, angle: 0, speed: 5, moveAngle: 0, type: 1 },
+        gameObjects: [],
       };
     },
     methods: {
@@ -50,6 +53,9 @@
   
         this.updateGameArea();
         this.gameInterval = setInterval(this.updateGameArea, 20);
+
+        this.gameObjects.push(this.player1);
+        this.gameObjects.push(this.player2);
       },
       updateGameArea() {
         const canvas = this.$refs.gameCanvas;
@@ -62,31 +68,72 @@
         if (this.keys['ArrowRight']) this.player1.moveAngle = 6;
         if (this.keys['ArrowUp']) this.player1.speed = 2;
         if (this.keys['ArrowDown']) this.player1.speed = -2;
+        if (this.keys['.']) this.newBullet1();
 
         //pp2
         if (this.keys['a']) this.player2.moveAngle = -6;
         if (this.keys['d']) this.player2.moveAngle = 6;
         if (this.keys['w']) this.player2.speed = 2;
         if (this.keys['s']) this.player2.speed = -2;
+        if (this.keys['e']) this.newBullet2();
 
-        this.updatePlayerPosition(this.player1);
-        this.updatePlayerPosition(this.player2);
+        for (let index = 0; index < this.gameObjects.length; index++) {
+          this.updatePlayerPosition(this.gameObjects[index]);
+          if (index == 0) this.drawPlayer(ctx, this.gameObjects[index], this.selectedPlayer1Image);
+          else if (index == 1) this.drawPlayer(ctx, this.gameObjects[index], this.selectedPlayer2Image);
+          else this.drawBullet(ctx, this.gameObjects[index]);
+        }
+      },
+      async newBullet1() {
+        this.bullet1.x = this.player1.x;
+        this.bullet1.angle = this.player1.angle;
+        this.bullet1.y = this.player1.y;
+        this.gameObjects.push(this.bullet1);
+      },
+      async newBullet2() {
+        this.bullet2.x = this.player2.x;
+        this.bullet2.angle = this.player2.angle;
+        this.bullet2.y = this.player2.y;
+        this.gameObjects.push(this.bullet2);
+      },
+      newPos(player) {
+        if (player.type!=1) {
+                player.angle += player.moveAngle * Math.PI / 180;
+        }
+              let newx = player.x + player.speed * Math.sin(player.angle);
+              let newy = player.y - player.speed * Math.cos(player.angle);
 
-        this.drawPlayer(ctx, this.player1, this.selectedPlayer1Image);
-        this.drawPlayer(ctx, this.player2, this.selectedPlayer2Image);
+        if (newx >= player.width / 2 && player.width / 2 + newx <= 600){ 
+          player.x = newx
+        } else if (player.type == 1) {
+          player.health = 0;
+        }
+        if (newy > player.height / 2 && player.height / 2 + newy <= 480){
+          player.y = newy
+        } else if (player.type == 1) {
+          player.health = 0;
+        }
       },
       updatePlayerPosition(player) {
-        player.angle += player.moveAngle * Math.PI / 180;
-        player.x += player.speed * Math.sin(player.angle);
-        player.y -= player.speed * Math.cos(player.angle);
-        player.moveAngle = 0;
-        player.speed = 0;
+        this.newPos(player)
+        if (player.type != 1) {
+          player.moveAngle = 0;
+          player.speed = 0;
+        }
       },
       drawPlayer(ctx, player, image) {
         ctx.save();
         ctx.translate(player.x, player.y);
         ctx.rotate(player.angle);
-        ctx.drawImage(image, -16, -16, 32, 32);
+        ctx.drawImage(image, player.width / -2, player.height / -2, player.width, player.height);
+        ctx.restore();
+      },
+      drawBullet(ctx, player) {
+        ctx.save();
+        ctx.translate(player.x, player.y);
+        ctx.rotate(player.angle);
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(player.width / -2, player.height / -2, player.width, player.height);
         ctx.restore();
       },
       keyDownHandler(e) {

@@ -44,7 +44,7 @@ export default {
     return {
       slideIndexP1: 1,
       slideIndexP2: 1,
-      playerName: '',  // Asegúrate de inicializar el playerName
+      playerName: '',  
       slidesP1: [
         { src: require('@/assets/images/rifle/idle/survivor-idle_rifle_0.png') },
         { src: require('@/assets/images/shotgun/idle/survivor-idle_shotgun_0.png') },
