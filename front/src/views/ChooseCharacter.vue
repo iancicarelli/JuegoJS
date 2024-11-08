@@ -6,7 +6,7 @@
       <div v-for="(slide, index) in slidesP1" :key="'p1-' + index" class="mySlides fade" v-show="index + 1 === slideIndexP1">
         <div class="numbertext">{{ index + 1 }} / 4</div>
         <img :src="slide.src" class="slide-image">
-        <div class="text">p1</div>
+        <div class="text">{{ playerName }}</div>
       </div>
       <a class="prev" @click="plusSlidesP1(-1)">&#10094;</a>
       <a class="next" @click="plusSlidesP1(1)">&#10095;</a>
@@ -36,54 +36,70 @@
   </template>
   
   <script>
-  export default {
-    name: 'ChooseCharacter',
-    data() {
-      return {
-        slideIndexP1: 1,
-        slideIndexP2: 1,
-        slidesP1: [
-          { src: require('@/assets/images/rifle/idle/survivor-idle_rifle_0.png') },
-          { src: require('@/assets/images/shotgun/idle/survivor-idle_shotgun_0.png') },
-          { src: require('@/assets/images/handgun/idle/survivor-idle_handgun_0.png') },
-          { src: require('@/assets/images/flashlight/idle/survivor-idle_flashlight_0.png') }
-        ],
-        slidesP2: [
-          { src: require('@/assets/images/shotgun/idle/survivor-idle_shotgun_0.png') },
-          { src: require('@/assets/images/rifle/idle/survivor-idle_rifle_0.png') },
-          { src: require('@/assets/images/handgun/idle/survivor-idle_handgun_0.png') },
-          { src: require('@/assets/images/flashlight/idle/survivor-idle_flashlight_0.png') }
-        ]
-      };
+import axios from 'axios';
+
+export default {
+  name: 'ChooseCharacter',
+  data() {
+    return {
+      slideIndexP1: 1,
+      slideIndexP2: 1,
+      playerName: '',  // Asegúrate de inicializar el playerName
+      slidesP1: [
+        { src: require('@/assets/images/rifle/idle/survivor-idle_rifle_0.png') },
+        { src: require('@/assets/images/shotgun/idle/survivor-idle_shotgun_0.png') },
+        { src: require('@/assets/images/handgun/idle/survivor-idle_handgun_0.png') },
+        { src: require('@/assets/images/flashlight/idle/survivor-idle_flashlight_0.png') }
+      ],
+      slidesP2: [
+        { src: require('@/assets/images/shotgun/idle/survivor-idle_shotgun_0.png') },
+        { src: require('@/assets/images/rifle/idle/survivor-idle_rifle_0.png') },
+        { src: require('@/assets/images/handgun/idle/survivor-idle_handgun_0.png') },
+        { src: require('@/assets/images/flashlight/idle/survivor-idle_flashlight_0.png') }
+      ]
+    };
+  },
+  created() {
+    this.loadLastPlayerName(); 
+  },
+  methods: {
+    plusSlidesP1(n) {
+      this.showSlidesP1(this.slideIndexP1 += n);
     },
-    methods: {
-      plusSlidesP1(n) {
-        this.showSlidesP1(this.slideIndexP1 += n);
-      },
-      currentSlideP1(n) {
-        this.showSlidesP1(this.slideIndexP1 = n);
-      },
-      showSlidesP1(n) {
-        if (n > this.slidesP1.length) this.slideIndexP1 = 1;
-        if (n < 1) this.slideIndexP1 = this.slidesP1.length;
-      },
-      plusSlidesP2(n) {
-        this.showSlidesP2(this.slideIndexP2 += n);
-      },
-      currentSlideP2(n) {
-        this.showSlidesP2(this.slideIndexP2 = n);
-      },
-      showSlidesP2(n) {
-        if (n > this.slidesP2.length) this.slideIndexP2 = 1;
-        if (n < 1) this.slideIndexP2 = this.slidesP2.length;
-      },
-      ready() {
-        localStorage.setItem('selectedP1', this.slideIndexP1 - 1);
-        localStorage.setItem('selectedP2', this.slideIndexP2 - 1);
-        this.$router.push({ path: '/game' });
+    currentSlideP1(n) {
+      this.showSlidesP1(this.slideIndexP1 = n);
+    },
+    showSlidesP1(n) {
+      if (n > this.slidesP1.length) this.slideIndexP1 = 1;
+      if (n < 1) this.slideIndexP1 = this.slidesP1.length;
+    },
+    plusSlidesP2(n) {
+      this.showSlidesP2(this.slideIndexP2 += n);
+    },
+    currentSlideP2(n) {
+      this.showSlidesP2(this.slideIndexP2 = n);
+    },
+    showSlidesP2(n) {
+      if (n > this.slidesP2.length) this.slideIndexP2 = 1;
+      if (n < 1) this.slideIndexP2 = this.slidesP2.length;
+    },
+   
+    async loadLastPlayerName() {
+      try {
+        const response = await axios.get('http://localhost:3000/players'); 
+        const player = response.data;  
+        this.playerName = player.playerName; 
+      } catch (error) {
+        console.error('Error al cargar el nombre del jugador:', error);
       }
+    },
+    ready() {
+      localStorage.setItem('selectedP1', this.slideIndexP1 - 1);
+      localStorage.setItem('selectedP2', this.slideIndexP2 - 1);
+      this.$router.push({ path: '/game' });
     }
-  };
-  </script>
+  }
+};
+</script>
   
   <style src="@/assets/style/ChooseCharacter.css"></style>

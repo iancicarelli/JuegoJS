@@ -16,6 +16,7 @@
   </template>
   
   <script>
+  import axios from 'axios';
   export default {
     data() {
       return {
@@ -24,21 +25,24 @@
       };
     },
     methods: {
-      handleSubmit() {
-        
-        if (this.playerName && this.playerEmail) {
-          
-          localStorage.setItem('playerName', this.playerName);
-          localStorage.setItem('playerEmail', this.playerEmail);
-  
-          
-          this.$router.push({ name: 'chooseCharacter' });
-        } else {
-          alert('Por favor, complete todos los campos.');
-        }
-      }
+      async handleSubmit() {
+  if (this.playerName && this.playerEmail) {
+    try {
+      const response = await axios.post('http://localhost:3000/register', {
+        playerName: this.playerName,
+        playerEmail: this.playerEmail
+      });
+      console.log(response.data.message);
+      this.$router.push({ name: 'chooseCharacter' });
+    } catch (error) {
+      console.error('Error al registrar:', error.response || error);
     }
-  };
+  } else {
+    alert('Por favor, complete todos los campos.');
+  }
+}
+    }
+};
   </script>
   
   <style scoped>

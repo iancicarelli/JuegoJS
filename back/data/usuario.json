@@ -1,0 +1,38 @@
+[
+  {
+    "playerName": "test1",
+    "playerEmail": "test@gmail.com"
+  },
+  {
+    "playerName": "test",
+    "playerEmail": "test@gmail.com"
+  },
+  {
+    "playerName": "test3",
+    "playerEmail": "test3@gmail.com"
+  },
+  {
+    "playerName": "DirCom",
+    "playerEmail": "dircom@gmail.com"
+  },
+  {
+    "playerName": "john",
+    "playerEmail": "doe@gmail.com"
+  },
+  {
+    "playerName": "gg",
+    "playerEmail": "g@gmail.com"
+  },
+  {
+    "playerName": "front",
+    "playerEmail": "front@gmail.com"
+  },
+  {
+    "playerName": "m",
+    "playerEmail": "dircom@gmail.com"
+  },
+  {
+    "playerName": "testt",
+    "playerEmail": "test3@gmail.com"
+  }
+]
